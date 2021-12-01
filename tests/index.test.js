@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { act, render, fireEvent, userEvent } from './test-utils';
-import { axe } from 'jest-axe';
 
 import { FocusScope } from '../src/index';
 
@@ -20,8 +19,7 @@ describe('<FocusScope />', () => {
 				<input id="input" data-testid="input1" />
 			</FocusScope>,
 		);
-		const results = await axe(container);
-		expect(results).toHaveNoViolations();
+		await expect(container).toHaveNoAxeViolations();
 	});
 
 	it(`should render focus guards before and after it's children`, () => {
