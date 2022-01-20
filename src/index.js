@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import * as React from 'react';
 import {
 	useIsomorphicLayoutEffect as useLayoutEffect,
 	focusWithoutScrolling,
@@ -31,9 +31,9 @@ export function FocusScope(props) {
 		autoFocus = true,
 		initialFocusRef,
 	} = props;
-	let startRef = useRef();
-	let endRef = useRef();
-	let scopeRef = useRef([]);
+	let startRef = React.useRef();
+	let endRef = React.useRef();
+	let scopeRef = React.useRef([]);
 
 	// NOTE(joel): Find all rendered nodes between the sentinels and add them to
 	// the scope.
@@ -73,10 +73,10 @@ export function FocusScope(props) {
  * @param {boolean} contain
  */
 function useFocusContainment(scopeRef, contain) {
-	let focusedNode = useRef();
+	let focusedNode = React.useRef();
 
-	let raf = useRef(null);
-	useEffect(() => {
+	let raf = React.useRef(null);
+	React.useEffect(() => {
 		let scope = scopeRef.current;
 		if (!contain) return;
 
@@ -176,7 +176,7 @@ function useFocusContainment(scopeRef, contain) {
 	}, [scopeRef, contain]);
 
 	// NOTE(joel): Cancel the current RequestAnimationFrame
-	useEffect(() => () => window.cancelAnimationFrame(raf.current), [raf]);
+	React.useEffect(() => () => window.cancelAnimationFrame(raf.current), [raf]);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -406,7 +406,7 @@ function focusFirstInScope(scope) {
  * @param {boolean} contain
  */
 function useRestoreFocus(scopeRef, restoreFocus, contain) {
-	// NOTE(joel): We use `useLayoutEffect` instead of `useEffect` so the active
+	// NOTE(joel): We use `useLayoutEffect` instead of `React.useEffect` so the active
 	// element is saved synchronously instead of asynchronously.
 	useLayoutEffect(() => {
 		const scope = scopeRef.current;
@@ -508,7 +508,7 @@ function useRestoreFocus(scopeRef, restoreFocus, contain) {
  * @param {RefObject<any>} initialFocusRef
  */
 function useAutoFocus(scopeRef, autoFocus, initialFocusRef) {
-	useEffect(() => {
+	React.useEffect(() => {
 		if (autoFocus && initialFocusRef == null) {
 			activeScope = scopeRef;
 			if (!isElementInScope(document.activeElement, activeScope.current)) {
