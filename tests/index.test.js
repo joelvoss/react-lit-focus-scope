@@ -22,7 +22,7 @@ describe('<FocusScope />', () => {
 		await expect(container).toHaveNoAxeViolations();
 	});
 
-	it(`should render focus guards before and after it's children`, () => {
+	it(`should render focus guards before and after it's children`, async () => {
 		const { container } = render(
 			<FocusScope>
 				<input data-testid="input1" />
@@ -34,7 +34,7 @@ describe('<FocusScope />', () => {
 		);
 	});
 
-	it('should autofocus on mount', () => {
+	it('should autofocus on mount', async () => {
 		const { getByTestId } = render(
 			<FocusScope>
 				<input data-testid="input1" />
@@ -45,7 +45,7 @@ describe('<FocusScope />', () => {
 		expect(document.activeElement).toBe(input1);
 	});
 
-	it('should contain focus within the scope', () => {
+	it('should contain focus within the scope', async () => {
 		const { getByTestId } = render(
 			<FocusScope>
 				<input data-testid="input1" />
@@ -63,26 +63,26 @@ describe('<FocusScope />', () => {
 		});
 		expect(document.activeElement).toBe(input1);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input2);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input3);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input1);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input3);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input2);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input1);
 	});
 
-	it('should work with nested elements', () => {
+	it('should work with nested elements', async () => {
 		const { getByTestId } = render(
 			<FocusScope>
 				<input data-testid="input1" />
@@ -104,26 +104,26 @@ describe('<FocusScope />', () => {
 		});
 		expect(document.activeElement).toBe(input1);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input2);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input3);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input1);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input3);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input2);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input1);
 	});
 
-	it('should skip non-tabbable elements', () => {
+	it('should skip non-tabbable elements', async () => {
 		const { getByTestId } = render(
 			<FocusScope>
 				<input data-testid="input1" />
@@ -148,26 +148,26 @@ describe('<FocusScope />', () => {
 		});
 		expect(document.activeElement).toBe(input1);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input2);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input3);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input1);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input3);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input2);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input1);
 	});
 
-	it('should do nothing if a modifier key is pressed', () => {
+	it('should do nothing if a modifier key is pressed', async () => {
 		const { getByTestId } = render(
 			<FocusScope>
 				<input data-testid="input1" />
@@ -187,7 +187,7 @@ describe('<FocusScope />', () => {
 		expect(document.activeElement).toBe(input1);
 	});
 
-	it('should work with multiple focus scopes', () => {
+	it('should work with multiple focus scopes', async () => {
 		const { getByTestId } = render(
 			<div>
 				<FocusScope>
@@ -221,22 +221,22 @@ describe('<FocusScope />', () => {
 		});
 		expect(document.activeElement).toBe(input1);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input2);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input3);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input1);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input3);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input2);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input1);
 
 		act(() => {
@@ -244,26 +244,26 @@ describe('<FocusScope />', () => {
 		});
 		expect(document.activeElement).toBe(input4);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input5);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input6);
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(input4);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input6);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input5);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(input4);
 	});
 
-	it('should restore focus to the last focused element in the scope when re-entering the browser', () => {
+	it('should restore focus to the last focused element in the scope when re-entering the browser', async () => {
 		const { getByTestId } = render(
 			<div>
 				<input data-testid="outside" />
@@ -286,7 +286,7 @@ describe('<FocusScope />', () => {
 		fireEvent.focusIn(input1);
 		expect(document.activeElement).toBe(input1);
 
-		userEvent.tab();
+		await userEvent.tab();
 		fireEvent.focusIn(input2);
 		expect(document.activeElement).toBe(input2);
 
@@ -302,7 +302,7 @@ describe('<FocusScope />', () => {
 		expect(document.activeElement).toBe(input2);
 	});
 
-	it('should restore focus to the last focused element in the scope on focus out', () => {
+	it('should restore focus to the last focused element in the scope on focus out', async () => {
 		const { getByTestId } = render(
 			<div>
 				<FocusScope>
@@ -321,7 +321,7 @@ describe('<FocusScope />', () => {
 		fireEvent.focusIn(input1); // jsdom doesn't fire this automatically
 		expect(document.activeElement).toBe(input1);
 
-		userEvent.tab();
+		await userEvent.tab();
 		fireEvent.focusIn(input2);
 		expect(document.activeElement).toBe(input2);
 
@@ -333,7 +333,7 @@ describe('<FocusScope />', () => {
 		expect(document.activeElement).toBe(input2);
 	});
 
-	it('should use document.activeElement instead of e.relatedTarget on blur to determine if focus is still in scope', () => {
+	it('should use document.activeElement instead of e.relatedTarget on blur to determine if focus is still in scope', async () => {
 		const { getByTestId } = render(
 			<div>
 				<FocusScope>
@@ -362,7 +362,7 @@ describe('<FocusScope />', () => {
 		expect(document.activeElement).toBe(input2);
 	});
 
-	it('should restore focus to the previously focused node on unmount', () => {
+	it('should restore focus to the previously focused node on unmount', async () => {
 		function Comp({ show }) {
 			return (
 				<div>
@@ -396,7 +396,7 @@ describe('<FocusScope />', () => {
 		expect(document.activeElement).toBe(outside);
 	});
 
-	it('should move focus to the next element after the previously focused node on Tab', () => {
+	it('should move focus to the next element after the previously focused node on Tab', async () => {
 		function Comp({ show }) {
 			return (
 				<div>
@@ -431,11 +431,11 @@ describe('<FocusScope />', () => {
 			input3.focus();
 		});
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(getByTestId('after'));
 	});
 
-	it('should move focus to the previous element after the previously focused node on Shift+Tab', () => {
+	it('should move focus to the previous element after the previously focused node on Shift+Tab', async () => {
 		function Comp({ show }) {
 			return (
 				<div>
@@ -465,11 +465,11 @@ describe('<FocusScope />', () => {
 		let input1 = getByTestId('input1');
 		expect(document.activeElement).toBe(input1);
 
-		userEvent.tab({ shift: true });
+		await userEvent.tab({ shift: true });
 		expect(document.activeElement).toBe(getByTestId('before'));
 	});
 
-	it('should skip over elements within the scope when moving focus to the next element', () => {
+	it('should skip over elements within the scope when moving focus to the next element', async () => {
 		function Comp({ show }) {
 			return (
 				<div>
@@ -504,11 +504,11 @@ describe('<FocusScope />', () => {
 			input3.focus();
 		});
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(getByTestId('after'));
 	});
 
-	it('should auto focus the first tabbable element in the scope on mount', () => {
+	it('should auto focus the first tabbable element in the scope on mount', async () => {
 		let { getByTestId } = render(
 			<FocusScope>
 				<div />
@@ -522,7 +522,7 @@ describe('<FocusScope />', () => {
 		expect(document.activeElement).toBe(input1);
 	});
 
-	it('should do nothing if something is already focused in the scope', () => {
+	it('should do nothing if something is already focused in the scope', async () => {
 		let { getByTestId } = render(
 			<FocusScope>
 				<div />
@@ -536,7 +536,7 @@ describe('<FocusScope />', () => {
 		expect(document.activeElement).toBe(input2);
 	});
 
-	it('should auto focus the element passed via ref on mount', () => {
+	it('should auto focus the element passed via ref on mount', async () => {
 		const Comp = () => {
 			const initialFocusRef = React.useRef();
 			return (
@@ -546,8 +546,8 @@ describe('<FocusScope />', () => {
 					<input data-testid="input2" />
 					<input data-testid="input3" ref={initialFocusRef} />
 				</FocusScope>
-			)
-		}
+			);
+		};
 
 		let { getByTestId } = render(<Comp />);
 

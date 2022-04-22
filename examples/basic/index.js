@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import * as React from 'react';
 import { FocusScope } from '../../src/index';
 
 export function Example() {
-	const [isOpen, setOpen] = useState(false);
+	const [isOpen, setOpen] = React.useState(false);
 
 	return (
 		<>
